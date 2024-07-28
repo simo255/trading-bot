@@ -139,8 +139,13 @@ class Client(object):
         """
         return self._send_request("GET", "/orders/activeList", params={"symbol": symbol})
 
-    def query_24h_ticker(self, symbol):
-        """
-        https://github.com/phemex/phemex-api-docs/blob/master/Public-API-en.md#633-query-24-hours-ticker
-        """
-        return self._send_request("GET", "/md/ticker/24hr", params={"symbol": symbol})
+
+    def query_spot_wallet(self, currency=""):
+        url = "/spot/wallets"
+        wallet = self._send_request("GET",url, params = {"currency": currency})['data']
+        return wallet
+
+    def query_futures_wallet(self, currency=""):
+        url = "/futures/wallets"
+        wallet = self._send_request("GET",url, params = {"currency": currency})['data']
+        return wallet

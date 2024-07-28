@@ -1,7 +1,7 @@
 import os 
 import sys
 import time
-
+import constants
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(dir_path + "/../")
 
@@ -9,13 +9,19 @@ from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
 
 # Create a testnet client
-client = Client("api_key", "api_secret", True)
+client = Client(constants.API_KEY, constants.API_SECRET, True)
 
 # Get account and positions
 r = client.query_account_n_positions(Client.CURRENCY_BTC)
-print(r)
-r = client.query_account_n_positions(Client.CURRENCY_USD)
-print(r)
+#print(r)
+
+r = client.query_spot_wallet()
+for i in r:
+    print(i['currency'], i['balanceEv'])
+
+# r = client.query_account_n_positions(Client.CURRENCY_USD)
+# print(r)
+'''
 try:
     r = client.query_account_n_positions("BTC1")
     print(r)
@@ -103,3 +109,4 @@ try:
     print(client.query_24h_ticker("BTCUSD"))
 except PhemexAPIException as e:
     print(e)
+    '''
